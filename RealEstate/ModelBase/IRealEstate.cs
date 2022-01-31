@@ -7,11 +7,7 @@ using RealEstate.Models;
 
 namespace RealEstate.ModelBase
 {
-    public enum SellType
-    { 
-        ForSale,
-        ForRent
-    }
+
     public interface IRealEstate
     {
         int RealEstateID { get; set; }

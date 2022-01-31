@@ -7,20 +7,7 @@ using RealEstate.DataAccess;
 
 namespace RealEstate.Models
 {
-    public enum HeatingType
-    { 
-        NaturalGas,
-        AirCondition,
-        Stove, 
-        CentralHeating
-    }
-    public enum ResidentialType
-    { 
-        Flat,
-        Residence,
-        Villa,
-        FarmHouse
-    }
+    
     public class Residential : IRealEstate
     {
         public int RealEstateID { get; set; }
