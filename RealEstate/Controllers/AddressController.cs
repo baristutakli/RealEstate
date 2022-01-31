@@ -11,11 +11,25 @@ namespace RealEstate.Controllers
 {
     public class AddressController : Controller
     {
+        private Address _Address { get; set; }
+        public Address Address {
+            get
+            {
+                if (this._Address == null)
+                    this._Address = new Address();
+                return this._Address;
+            }
+        }
+        public ActionResult Add()
+        {
+            ViewBag.countries = GetCountries();
+            return View(this.Address);
+        }
         public string GetCountries()
         {
             // Liste olarak döndürülen Address nesnelerini json objelerine çevirdik.
             // string tipindeki bu json objelerini js ile html içerisine yerleştireceğiz.
-            string query = "SELECT * FROM Address;";
+            string query = "SELECT * FROM AddressCountry;";
             string jsonCountries =  JsonConvert.SerializeObject(AddressCountryDAL.Methods.ListCountry(query));
             return jsonCountries;
         }

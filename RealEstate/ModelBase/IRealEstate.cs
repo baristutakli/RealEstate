@@ -18,5 +18,8 @@ namespace RealEstate.ModelBase
         SellType SellType { get; set; }
         double Square { get; set; }
         Address Address { get; set; }
+        User User { get; set; }
+        int _UserID { get; set; }
+        int UserID { get; set; }
     }
 }

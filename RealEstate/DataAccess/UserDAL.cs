@@ -10,7 +10,16 @@ namespace RealEstate.DataAccess
 {
     public class UserDAL
     {
-
+        static private UserDAL _Methods { get; set; }
+        static public UserDAL Methods
+        {
+            get
+            {
+                if (_Methods != null)
+                    _Methods = new UserDAL();
+                return _Methods;
+            }
+        }
         public object Insert(User user)
         {
 
@@ -95,6 +104,12 @@ namespace RealEstate.DataAccess
                 DbTools.Connection.DisconnectDB();
             }
             return users;
+        }
+
+        public User GetByID(int id)
+        {
+            string query = $"SELECT * FROM User Where ID = {id}";
+            return ListUser(query)[0];
         }
     }
 

@@ -1,0 +1,65 @@
+﻿@model RealEstate.Models.Address
+@using Newtonsoft.Json
+@using RealEstate.Models
+
+
+@{
+    Layout = null;
+
+    List<SelectListItem> selectCountry = new List<SelectListItem>();
+    if (ViewBag.countries != null)
+    {
+        List<AddressCountry> countries = JsonConvert.DeserializeObject<List<AddressCountry>>(ViewBag.countries);
+
+        foreach (AddressCountry country in countries)
+        {
+            SelectListItem si = new SelectListItem();
+            si.Text = country.Name;
+            si.Value = country.ID.ToString();
+            selectCountry.Add(si);
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+</head>
+<body>
+    @using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+        <section class="row">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CountryID, selectCountry)
+                    @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+                </div>
+        </section>
+        <div class="form-horizontal">
+            <h4>Address</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

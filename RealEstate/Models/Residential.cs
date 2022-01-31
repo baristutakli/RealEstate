@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using RealEstate.ModelBase;
+using RealEstate.DataAccess;
 
 namespace RealEstate.Models
 {
@@ -32,5 +33,18 @@ namespace RealEstate.Models
         public bool Balcony { get; set; }
         public bool Furnished { get; set; }
         public ResidentialType ResidentialType { get; set; }
+        public User User { get; set; }
+        private int _UserID {
+            get
+            {
+                return this._UserID;
+            }
+            set
+            {
+                this._UserID = value;
+                this.User = UserDAL.Methods.GetByID(value);
+            } 
+        }
+        public int UserID { get; set; }
     }
 }
