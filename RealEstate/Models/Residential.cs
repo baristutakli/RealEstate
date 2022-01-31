@@ -34,7 +34,8 @@ namespace RealEstate.Models
         public bool Furnished { get; set; }
         public ResidentialType ResidentialType { get; set; }
         public User User { get; set; }
-        private int _UserID {
+        private int _UserID {get;set;}
+        public int UserID {
             get
             {
                 return this._UserID;
@@ -43,8 +44,7 @@ namespace RealEstate.Models
             {
                 this._UserID = value;
                 this.User = UserDAL.Methods.GetByID(value);
-            } 
+            }
         }
-        public int UserID { get; set; }
     }
 }

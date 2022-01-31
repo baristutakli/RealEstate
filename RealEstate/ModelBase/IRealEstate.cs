@@ -19,7 +19,6 @@ namespace RealEstate.ModelBase
         double Square { get; set; }
         Address Address { get; set; }
         User User { get; set; }
-        int _UserID { get; set; }
         int UserID { get; set; }
     }
 }
