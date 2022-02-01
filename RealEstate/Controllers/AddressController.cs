@@ -20,11 +20,23 @@ namespace RealEstate.Controllers
                 return this._Address;
             }
         }
+        public ActionResult Index()
+        {
+            return View(AddressDAL.Methods.ListAddress("SELECT * FROM Address;"));
+        }
         public ActionResult Add()
         {
             ViewBag.countries = GetCountries();
             return View(this.Address);
         }
+        [HttpPost]
+        public ActionResult Add(Address address)
+        {
+            object insertedID = AddressDAL.Methods.Insert(address);
+            TempData["insertedID"] = insertedID;
+            return RedirectToAction("Index");
+        }
+
         public string GetCountries()
         {
             // Liste olarak döndürülen Address nesnelerini json objelerine çevirdik.
@@ -40,11 +52,11 @@ namespace RealEstate.Controllers
             Console.WriteLine(id);
             return Json(jsonCities, JsonRequestBehavior.AllowGet);
         }
-        public string GetTowns(int cityid)
+        public JsonResult GetTowns(int id)
         {
-            string query = $"SELECT * FROM AddressTown WHERE CityID={cityid};";
+            string query = $"SELECT * FROM AddressTown WHERE CityID={id};";
             string jsonTowns = JsonConvert.SerializeObject(AddressTownDAL.Methods.ListTown(query));
-            return jsonTowns;
+            return Json(jsonTowns, JsonRequestBehavior.AllowGet);
         }
         public string GetAddressByID(int addressid)
         {
