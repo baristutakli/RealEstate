@@ -30,11 +30,12 @@ namespace RealEstate.Controllers
             return View(this.Address);
         }
         [HttpPost]
-        public ActionResult Add(Address address)
+        public bool Add(Address address)
         {
             object insertedID = AddressDAL.Methods.Insert(address);
             TempData["insertedID"] = insertedID;
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return true;
         }
 
         public string GetCountries()
@@ -49,7 +50,6 @@ namespace RealEstate.Controllers
         {
             string query = $"SELECT * FROM AddressCity WHERE CountryID={id};";
             string jsonCities = JsonConvert.SerializeObject(AddressCityDAL.Methods.ListCity(query));
-            Console.WriteLine(id);
             return Json(jsonCities, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetTowns(int id)

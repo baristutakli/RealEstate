@@ -80,17 +80,16 @@
         GETİR
     </button>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script>
-        //$.getJSON("/Address/GetCities/1"
         $(document).ready(() => {
-
             //To change city list when country change
             $('#CountryID').on('change', function (e) {
+
                 var selectedid = $("option:selected", this).val();
-                console.log(selectedid);
+                //console.log(selectedid);
                 var address = '/Address/GetCities/' + selectedid + '';
                 $.getJSON(address, function (data) {
+                    //console.log(data);
                     data = data.replace("[", "");
                     data = data.replace("]", "");
                     data = data.replace(/\},{/g, "}...{");
@@ -98,11 +97,11 @@
                     $("#CityID").html("");
 
                     $.each(datas, function (i, value) {
-                        console.log(value);
+                        //console.log(value);
                         var city = JSON.parse(value);
-                        console.log(city.ID);
-                        console.log(city.Name);
-                        console.log(city.Country);
+                        //console.log(city.ID);
+                        //console.log(city.Name);
+                        //console.log(city.CountryID);
                         $("#CityID").append("<option value='" + city.ID + "'>" + city.Name + "</option>");
                     });
                 });
@@ -116,7 +115,7 @@
             //To change town list when city change
             $('#CityID').on('change', function (e) {
                 var selectedid = $("option:selected", this).val();
-                console.log(selectedid);
+                //console.log(selectedid);
                 var address = '/Address/GetTowns/' + selectedid + '';
                 $.getJSON(address, function (data) {
                     data = data.replace("[", "");
@@ -126,21 +125,44 @@
                     $("#TownID").html("");
 
                     $.each(datas, function (i, value) {
-                        console.log(value);
+                        //console.log(value);
                         var town = JSON.parse(value);
-                        console.log(town.ID);
-                        console.log(town.Name);
-                        console.log(town.CityID);
+                        //console.log(town.ID);
+                        //console.log(town.Name);
+                        //console.log(town.CityID);
                         $("#TownID").append("<option value='" + town.ID + "'>" + town.Name + "</option>");
                     });
                 });
 
             });
+
             $('#CountryID').change();
 
 
+            $("form").submit(function (event) {
+                var formData = {
+                    CountryID: $("#CountryID").val(),
+                    CityID: $("#CityID").val(),
+                    TownID: $("#TownID").val(),
+                    Details: $("#Details").val(),
+                };
+                var post_url="/Address/Add"
+                $.ajax({
+                    type: "POST",
+                    url: post_url,
+                    data: formData,
+                    dataType: "json",
+                    encode: true,
+                    success: function (data) {
+                        //TODO: success kontrolü yapılacak.
+                    }
+                });
+
+                event.preventDefault();
+            });
            
         });
+
 
     </script>
 </body>
