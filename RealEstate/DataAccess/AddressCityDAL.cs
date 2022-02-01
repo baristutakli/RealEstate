@@ -16,7 +16,7 @@ namespace RealEstate.DataAccess
         {
             get
             {
-                if (_Methods != null)
+                if (_Methods == null)
                     _Methods = new AddressCityDAL();
                 return _Methods;
             }

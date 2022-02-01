@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ModelBase\Enums.cs" />
     <Compile Include="ModelBase\IAdvert.cs" />
     <Compile Include="ModelBase\IRealEstate.cs" />
     <Compile Include="Models\Address.cs" />

@@ -29,14 +29,14 @@
     <title>Add</title>
 </head>
 <body>
-    @using (Html.BeginForm()) 
+    @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         <section class="row">
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.CountryID, selectCountry)
-                    @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
-                </div>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CountryID, selectCountry)
+                @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+            </div>
         </section>
         <div class="form-horizontal">
             <h4>Address</h4>
@@ -49,7 +49,7 @@
                     @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Create" class="btn btn-default" />
@@ -57,9 +57,73 @@
             </div>
         </div>
     }
-    
+
+
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
+    <p id="show-data">
+
+    </p>
+    <button id="get-data">
+        GETİR
+    </button>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        //$.getJSON("/Address/GetCities/1"
+        $(document).ready(() => {
+
+            //To change city list when country change
+            $('#CountryID').on('change', function (e) {
+                var selectedid = $("option:selected", this).val();
+                console.log(selectedid);
+                var address = '/Address/GetCities/' + selectedid + '';
+                $.getJSON(address, function (data) {
+                    data = data.replace("[", "");
+                    data = data.replace("]", "");
+                    data = data.replace(/\},{/g, "}...{");
+                    datas = data.split("...");
+
+
+                    $.each(datas, function (i, value) {
+                        console.log(value);
+                        var city = JSON.parse(value);
+                        console.log(city.ID);
+                        console.log(city.Name);
+                        console.log(city.Country);
+                    });
+
+                });
+
+            });
+  
+
+            //$('#get-data').on('click', (e) => {
+            //    e.preventDefault();
+
+            //    $showData.text('Loading the JSON file.');
+            //    $.getJSON('/Address/GetCities/1', function (data) {
+            //        //console.log(data);
+            //        data = data.replace("[", "");
+            //        data = data.replace("]", "");
+            //        data = data.replace(/\},{/g, "}...{");
+            //        datas = data.split("...");
+
+
+            //        $.each(datas, function (i,value) {
+            //            console.log(value);
+            //            var city = JSON.parse(value);
+            //            console.log(city.ID);
+            //            console.log(city.Name);
+            //            console.log(city.Country);
+            //        });
+
+            //    });
+
+           /* });*/
+        });
+
+    </script>
 </body>
 </html>

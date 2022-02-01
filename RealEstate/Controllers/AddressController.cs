@@ -33,11 +33,12 @@ namespace RealEstate.Controllers
             string jsonCountries =  JsonConvert.SerializeObject(AddressCountryDAL.Methods.ListCountry(query));
             return jsonCountries;
         }
-        public string GetCities(int countryid)
+        public JsonResult GetCities(int id)
         {
-            string query = $"SELECT * FROM AddressCity WHERE CountryID={countryid};";
+            string query = $"SELECT * FROM AddressCity WHERE CountryID={id};";
             string jsonCities = JsonConvert.SerializeObject(AddressCityDAL.Methods.ListCity(query));
-            return jsonCities;
+            Console.WriteLine(id);
+            return Json(jsonCities, JsonRequestBehavior.AllowGet);
         }
         public string GetTowns(int cityid)
         {
