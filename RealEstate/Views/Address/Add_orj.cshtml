@@ -3,6 +3,7 @@
 @using Newtonsoft.Json
 @using RealEstate.Models
 @{
+    Layout = null;
 
     List<SelectListItem> selectCountry = new List<SelectListItem>();
     List<SelectListItem> selectCity = new List<SelectListItem>();
@@ -21,49 +22,54 @@
     }
 }
 
-<section class="row p-4">
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addform" }))
-    {
-        @Html.AntiForgeryToken()
-        <section class="row">
-        </section>
-        <div class="form-horizontal">
-            <h4>Address</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CountryID, selectCountry)
-                @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CityID, selectCity)
-                @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TownID, selectTown)
-                @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
-                </div>
-            </div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<section class="row">
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Add" class="btn btn-success" />
-                </div>
-            </div>
-        </div>
-    }
-
-
-    <div>
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
-    </div>
 </section>
+<div class="form-horizontal">
+    <h4>Address</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.CountryID, selectCountry)
+        @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.CityID, selectCity)
+        @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.TownID, selectTown)
+        @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<p id="show-data">
+
+</p>
+<button id="get-data">
+    GETİR
+</button>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(() => {
@@ -124,14 +130,14 @@
         $('#CountryID').change();
 
 
-        $("#addform").submit(function (event) {
+        $("form").submit(function (event) {
             var formData = {
                 CountryID: $("#CountryID").val(),
                 CityID: $("#CityID").val(),
                 TownID: $("#TownID").val(),
                 Details: $("#Details").val(),
             };
-            var post_url = "/Address/Add"
+            var post_url="/Address/Add"
             $.ajax({
                 type: "POST",
                 url: post_url,
@@ -145,6 +151,6 @@
 
             event.preventDefault();
         });
-
+           
     });
 </script>

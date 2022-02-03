@@ -53,7 +53,11 @@ namespace RealEstate.DataAccess
             return countries;
         }
 
-
+        public AddressCountry GetByID(int id)
+        {
+            string query = $"SELECT * FROM AddressCountry WHERE ID={id}";
+            return ListCountry(query)[0];
+        }
 
 
 

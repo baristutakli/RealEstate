@@ -53,6 +53,12 @@ namespace RealEstate.DataAccess
             return towns;
         }
 
+        public AddressTown GetByID(int id)
+        {
+            string query = $"SELECT * FROM AddressTown WHERE ID={id}";
+            return ListTown(query)[0];
+        }
+
        
 
 

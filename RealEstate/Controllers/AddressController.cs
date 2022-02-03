@@ -27,15 +27,55 @@ namespace RealEstate.Controllers
         public ActionResult Add()
         {
             ViewBag.countries = GetCountries();
+
+            // Partial ile birlikte kullanırken gerekli!
+            ViewBag.address = this.Address;
+
             return View(this.Address);
         }
         [HttpPost]
-        public bool Add(Address address)
+        public int Add(Address address)
         {
             object insertedID = AddressDAL.Methods.Insert(address);
             TempData["insertedID"] = insertedID;
             //return RedirectToAction("Index");
-            return true;
+            return Convert.ToInt32(insertedID);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            Address address = AddressDAL.Methods.GetByID(id);
+            ViewBag.countries = GetCountries();
+            return View(address);
+        }
+
+        [HttpPost]
+        public int Edit(Address address)
+        {
+            bool updateCheck=AddressDAL.Methods.Update(address);
+            if (updateCheck)
+                return 1;
+            else
+                return -1;
+        }
+
+        public ActionResult Details(int id)
+        {
+            Address address = AddressDAL.Methods.GetByID(id);
+            return View(address);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            Address address = AddressDAL.Methods.GetByID(id);
+            return View(address);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Address address)
+        {
+            AddressDAL.Methods.Delete(address);
+            return RedirectToAction("Index");
         }
 
         public string GetCountries()

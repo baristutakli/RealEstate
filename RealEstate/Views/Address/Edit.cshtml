@@ -1,9 +1,7 @@
 ﻿@model RealEstate.Models.Address
-
 @using Newtonsoft.Json
 @using RealEstate.Models
 @{
-
     List<SelectListItem> selectCountry = new List<SelectListItem>();
     List<SelectListItem> selectCity = new List<SelectListItem>();
     List<SelectListItem> selectTown = new List<SelectListItem>();
@@ -21,51 +19,54 @@
     }
 }
 
-<section class="row p-4">
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addform" }))
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editform" }))
     {
         @Html.AntiForgeryToken()
-        <section class="row">
-        </section>
-        <div class="form-horizontal">
-            <h4>Address</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CountryID, selectCountry)
-                @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CityID, selectCity)
-                @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TownID, selectTown)
-                @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
-                </div>
-            </div>
+<div class="form-horizontal">
+    <h4>Address @Model.ID </h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="col-md-10">
+    @Html.HiddenFor(model => model.ID)
+    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Add" class="btn btn-success" />
-                </div>
-            </div>
+</div>
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.CountryID, selectCountry)
+        @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.CityID, selectCity)
+        @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.TownID, selectTown)
+        @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
         </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+</div>
     }
 
 
     <div>
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back to List", "Index")
     </div>
-</section>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
     $(document).ready(() => {
         //To change city list when country change
         $('#CountryID').on('change', function (e) {
@@ -124,22 +125,31 @@
         $('#CountryID').change();
 
 
-        $("#addform").submit(function (event) {
+        $("#editform").submit(function (event) {
             var formData = {
+                ID: $("#ID").val(),
                 CountryID: $("#CountryID").val(),
                 CityID: $("#CityID").val(),
                 TownID: $("#TownID").val(),
-                Details: $("#Details").val(),
+                Details: $("#Details").val()
             };
-            var post_url = "/Address/Add"
+            var post_url="/Address/Edit"
             $.ajax({
                 type: "POST",
                 url: post_url,
                 data: formData,
                 dataType: "json",
                 encode: true,
-                success: function (data) {
-                    //TODO: success kontrolü yapılacak.
+                success: function (updateCheck) {
+                    if (updateCheck == 1)
+                    {
+                        alert("UPDATE SUCCESFULL!");
+                        location.reload("/address/index")
+                    }
+                    else if (updateCheck == 0)
+                    {
+                        alert("UPDATE ERROR !!!")
+                    }
                 }
             });
 
@@ -147,4 +157,4 @@
         });
 
     });
-</script>
+    </script>

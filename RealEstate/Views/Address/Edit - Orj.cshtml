@@ -1,9 +1,8 @@
 ﻿@model RealEstate.Models.Address
-
 @using Newtonsoft.Json
 @using RealEstate.Models
 @{
-
+    Layout = null;
     List<SelectListItem> selectCountry = new List<SelectListItem>();
     List<SelectListItem> selectCity = new List<SelectListItem>();
     List<SelectListItem> selectTown = new List<SelectListItem>();
@@ -21,8 +20,7 @@
     }
 }
 
-<section class="row p-4">
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addform" }))
+    @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         <section class="row">
@@ -53,7 +51,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Add" class="btn btn-success" />
+                    <input type="submit" value="Create" class="btn btn-default" />
                 </div>
             </div>
         </div>
@@ -61,11 +59,12 @@
 
 
     <div>
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back to List", "Index")
     </div>
-</section>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
     $(document).ready(() => {
         //To change city list when country change
         $('#CountryID').on('change', function (e) {
@@ -124,14 +123,14 @@
         $('#CountryID').change();
 
 
-        $("#addform").submit(function (event) {
+        $("form").submit(function (event) {
             var formData = {
                 CountryID: $("#CountryID").val(),
                 CityID: $("#CityID").val(),
                 TownID: $("#TownID").val(),
                 Details: $("#Details").val(),
             };
-            var post_url = "/Address/Add"
+            var post_url="/Address/Add"
             $.ajax({
                 type: "POST",
                 url: post_url,
@@ -147,4 +146,4 @@
         });
 
     });
-</script>
+    </script>

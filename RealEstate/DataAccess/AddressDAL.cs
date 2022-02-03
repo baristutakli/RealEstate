@@ -23,7 +23,7 @@ namespace RealEstate.DataAccess
         }
         public object Insert(Address address)
         {
-            string query = $"INSERT INTO Address (TownID,Details) VALUES({address.TownID},'{address.Details}'); SELECT CAST(scope_identity() as int);";
+            string query = $"INSERT INTO Address (TownID,Details,CityID,CountryID) VALUES({address.TownID},'{address.Details}',{address.CityID},{address.CountryID}); SELECT CAST(scope_identity() as int);";
             object insertedID = DbTools.Connection.Create(query);
             return insertedID;
         }
@@ -34,16 +34,12 @@ namespace RealEstate.DataAccess
         }
         public bool Update(Address address)
         {
-            string query = $@"
-                            UPDATE [dbo].[Address]
-                               SET [TownID] = {address.TownID}
-                                  ,[Details] = '{address.Details}'
-                             WHERE ID={address.ID};";
+            string query = $@"UPDATE [dbo].[Address] SET [TownID] = {address.TownID} ,[Details] = '{address.Details}', [CityID] ={address.CityID},[CountryID] = {address.CountryID} WHERE ID={address.ID};";
             return DbTools.Connection.Execute(query);
         }
-        public Address GetByID(int addressId)
+        public Address GetByID(int id)
         {
-            string query = $"SELECT * FROM Address WHERE ID={addressId};";
+            string query = $"SELECT * FROM Address WHERE ID={id};";
             return ListAddress(query)[0];
         }
 
@@ -62,7 +58,9 @@ namespace RealEstate.DataAccess
                     {
                         ID = int.Parse(reader["ID"].ToString()),
                         Details = reader["Details"].ToString(),
-                        TownID = int.Parse(reader["TownID"].ToString())
+                        TownID = int.Parse(reader["TownID"].ToString()),
+                        CityID = int.Parse(reader["CityID"].ToString()),
+                        CountryID = int.Parse(reader["CountryID"].ToString())
                     });
                 }
             }

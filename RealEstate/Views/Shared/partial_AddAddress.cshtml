@@ -1,9 +1,8 @@
-﻿@model RealEstate.Models.Address
+﻿@*@model RealEstate.Models.Address*@
 
 @using Newtonsoft.Json
 @using RealEstate.Models
 @{
-
     List<SelectListItem> selectCountry = new List<SelectListItem>();
     List<SelectListItem> selectCity = new List<SelectListItem>();
     List<SelectListItem> selectTown = new List<SelectListItem>();
@@ -21,49 +20,49 @@
     }
 }
 
-<section class="row p-4">
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addform" }))
-    {
-        @Html.AntiForgeryToken()
-        <section class="row">
-        </section>
-        <div class="form-horizontal">
-            <h4>Address</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CountryID, selectCountry)
-                @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CityID, selectCity)
-                @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TownID, selectTown)
-                @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
-                </div>
-            </div>
+<form action="/Address/Add" method="post" id = "addform" >
+    <input name="__RequestVerificationToken" type="hidden" />
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Add Address</h4>
+        <hr />
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Add" class="btn btn-success" />
-                </div>
+        <div class="col-md-10">
+            <label class="control-label col-md-2" for="Details">Country</label>
+            <select class="form-check form-select" data-val="true" data-val-number="The field CountryID must be a number." data-val-required="CountryID alanı gereklidir." id="CountryID" name="CountryID">
+                <option class="form form-control" value="1">Turkey</option>
+                <option class="form form-control" value="2">Italy</option>
+                <option class="form form-control" value="3">Egypt</option>
+            </select>
+            <span class="field-validation-valid text-danger" data-valmsg-for="CountryID" data-valmsg-replace="true"></span>
+        </div>
+        <div class="col-md-10">
+            <label class="control-label col-md-2" for="Details">City</label>
+            <select class="form-check form-select" data-val="true" data-val-number="The field CityID must be a number." data-val-required="CityID alanı gereklidir." id="CityID" name="CityID"></select>
+            <span class="field-validation-valid text-danger" data-valmsg-for="CityID" data-valmsg-replace="true"></span>
+        </div>
+        <div class="col-md-10">
+            <label class="control-label col-md-2" for="Details">Town</label>
+            <select class="form-check form-select" data-val="true" data-val-number="The field TownID must be a number." data-val-required="TownID alanı gereklidir." id="TownID" name="TownID"></select>
+            <span class="field-validation-valid text-danger" data-valmsg-for="TownID" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Details">Details</label>
+            <div class="col-md-10">
+                <textarea class="form form-control"  cols="20" htmlAttributes="{ class = form-control }" id="Details" name="Details" rows="2">
+</textarea>
+                <span class="field-validation-valid text-danger" data-valmsg-for="Details" data-valmsg-replace="true"></span>
             </div>
         </div>
-    }
 
-
-    <div>
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="from form-control btn btn-success" />
+            </div>
+        </div>
     </div>
-</section>
+</form>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(() => {
@@ -94,7 +93,7 @@
             setTimeout(
                 function () {
                     $('#CityID').change();
-                }, 100);
+                }, 400);
         });
 
         //To change town list when city change
@@ -138,8 +137,10 @@
                 data: formData,
                 dataType: "json",
                 encode: true,
-                success: function (data) {
-                    //TODO: success kontrolü yapılacak.
+                success: function (insertedid) {
+                    if (insertedid > 0) {
+                        location.reload();
+                    }
                 }
             });
 
@@ -147,4 +148,5 @@
         });
 
     });
+    //location.reload();
 </script>

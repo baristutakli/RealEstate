@@ -54,7 +54,11 @@ namespace RealEstate.DataAccess
             return cities;
         }
 
-
+        public AddressCity GetByID(int id)
+        {
+            string query = $"SELECT * FROM AddressCity WHERE ID={id}";
+            return ListCity(query)[0];
+        }
 
     }
 }
