@@ -1,83 +1,74 @@
 ﻿@model RealEstate.Models.User
 
 @{
-    Layout = null;
     string photoUrl = "../../../UploadedFiles/User/" + Model.ProfilePicUrl;
 }
+<section class="row">
+    <section class="col-9 p-5">
+        <div>
+            <h4>User</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.Label("Fotoğraf")
+                </dt>
 
-<!DOCTYPE html>
+                <dd>
+                    <img src="@photoUrl" alt="@Model.FullName" style="height:180px;width:140px;" />
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </dt>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
+                <dd>
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
 
-</head>
-<body>
-    <div>
-        <h4>User</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.Label("Fotoğraf")
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
 
-            <dd>
-                <img src="@photoUrl" alt="@Model.FullName" style="height:180px;width:140px;" />
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.FullName)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.FullName)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Password)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Password)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Password)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Password)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProfilePicUrl)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ProfilePicUrl)
 
-            <dd>
-                @Html.DisplayFor(model => model.PhoneNumber)
-            </dd>
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.AddressID)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ProfilePicUrl)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.AddressID)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.ProfilePicUrl)
-                
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.AddressID)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AddressID)
-            </dd>
-
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+        </p>
+    </section>
+</section>

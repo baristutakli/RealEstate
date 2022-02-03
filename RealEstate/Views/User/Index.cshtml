@@ -1,66 +1,64 @@
 ﻿@model IEnumerable<RealEstate.Models.User>
-
 @{
-    Layout = null;
+    string photoUrlBase = "../../../UploadedFiles/User/";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfilePicUrl)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+<section class="row">
+    @*TODO: Add User partial view will be added instead of Add button.*@
+    <section class="col-9 p-5">
+        <p>
+            @Html.ActionLink("Add User", "Create", null, new { @class = "btn btn-success" })
+        </p>
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProfilePicUrl)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfilePicUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Password)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    Action
+                </th>
             </tr>
-        }
 
-    </table>
-</body>
-</html>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="col-1">
+                        @{string photoUrl = photoUrlBase + item.ProfilePicUrl; }
+                        <img src="@photoUrl" alt="@item.FullName" style="height:80px;width:80px; border-radius:50%" />
+                    </td>
+                    <td class="col-1">
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td class="col-1">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td class="col-1">
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td class="col-1">
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+
+                    <td class="col-3">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-success" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-info" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </section>
+</section>

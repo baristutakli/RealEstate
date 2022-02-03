@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<RealEstate.Models.Address>
 
-    @*@if (TempData["insertedID"] != null)
+@*@if (TempData["insertedID"] != null)
     {
         <section class="alert alert-success">
             @TempData["insertedID"]
@@ -9,9 +9,9 @@
 <section class="row">
 
     @*<p>
-        @Html.ActionLink("Add Address", "Add", null, new { @class = "btn btn-success" })
-    </p>*@
-    <section class="col-9 p-4">
+            @Html.ActionLink("Add Address", "Add", null, new { @class = "btn btn-success" })
+        </p>*@
+    <section class="col-9 p-5">
         <table class="table">
             <tr>
                 <th>
@@ -59,3 +59,11 @@
         </p>
     </section>
 </section>
+@section style
+{
+    <style>
+        input, textarea, label, select, a {
+            margin: 0.25rem;
+        }
+    </style>
+}

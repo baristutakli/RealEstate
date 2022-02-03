@@ -18,56 +18,58 @@
         }
     }
 }
+<section class="row">
+    <section class="col-9 p-5">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editform", @class = "form form-control" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <h4>Address</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.ID)
+                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editform", @class = "form form-control" }))
-{
-    @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <h4>Address @Model.ID </h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="col-md-10">
-            @Html.HiddenFor(model => model.ID)
-            @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CountryID, selectCountry, new { @class = "form form-control form-select" })
+                    @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CityID, selectCity, new { @class = "form form-control form-select" })
+                    @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.TownID, selectTown, new { @class = "form form-control form-select" })
+                    @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Details, new { @class = "form form-control", @cols = 20 })
+                        @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        </div>
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.CountryID, selectCountry, new { @class = "form form-control form-select" })
-            @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.CityID, selectCity, new { @class = "form form-control form-select" })
-            @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.TownID, selectTown, new { @class = "form form-control form-select" })
-            @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Details, new { @class = "form form-control", @cols = 20 })
-                @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                <div class="form-group row">
+                    <div class="col-md-offset-2 col-md-2">
+                        <input type="submit" value="Save" class="btn btn-success form col-md-12" />
+                    </div>
+                    <div class="col-md-offset-2 col-md-2">
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary col-md-12" })
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-offset-2 col-md-2">
-                <input type="submit" value="Save" class="btn btn-success form col-md-12" />
-            </div>
-            <div class="col-md-offset-2 col-md-2">
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary col-md-12" })
-            </div>
-        </div>
-    </div>
-}
+        }
+    </section>
+</section>
 
 
 
 
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
         $(document).ready(() => {
             var currentCountryID = @Model.CountryID;
             var currentTownID = @Model.TownID;
@@ -185,13 +187,12 @@
         });
 
     });
-</script>
+        </script>
 @section style
 {
     <style>
-        input,textarea,label,select,a
-        {
-            margin:0.25rem;
+        input, textarea, label, select, a {
+            margin: 0.25rem;
         }
-    </style >
+    </style>
 }
