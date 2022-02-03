@@ -11,31 +11,39 @@
     @*<p>
         @Html.ActionLink("Add Address", "Add", null, new { @class = "btn btn-success" })
     </p>*@
-    <section class="col-8 p-4">
+    <section class="col-9 p-4">
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Details)
+                    Country
                 </th>
-                <th></th>
+                <th>
+                    City
+                </th>
+                <th>
+                    Town
+                </th>
+                <th>
+                    Details
+                </th>
             </tr>
 
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td class="col-1">
                         @Html.DisplayFor(modelItem => item.Country.Name)
                     </td>
-                    <td>
+                    <td class="col-1">
                         @Html.DisplayFor(modelItem => item.City.Name)
                     </td>
-                    <td>
+                    <td class="col-1">
                         @Html.DisplayFor(modelItem => item.Town.Name)
                     </td>
-                    <td>
+                    <td class="col-5">
                         @Html.DisplayFor(modelItem => item.Details)
                     </td>
-                    <td>
+                    <td class="col-4">
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-success" }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-info" }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
@@ -45,7 +53,7 @@
 
         </table>
     </section>
-    <section class="col-4 p-3 align-items-center align-content-center">
+    <section class="col-3 p-3 align-items-center align-content-center">
         <p>
             @Html.Partial("partial_AddAddress")
         </p>

@@ -1,18 +1,7 @@
 ﻿@model RealEstate.Models.Address
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
+<section class="row">
+    <section class="col-9 p-4">
         <h4>Address</h4>
         <hr />
         <dl class="dl-horizontal">
@@ -46,10 +35,12 @@
                 @Html.DisplayFor(model => model.Details)
             </dd>
         </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID}) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+        <p>
+            
+            <div class="form-actions no-color">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        </p>
+    </section>
+</section>

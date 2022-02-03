@@ -108,6 +108,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="Media\IMG\icons\real_estate.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -174,13 +175,14 @@
     <Content Include="Views\Address\Add_orj.cshtml" />
     <Content Include="Views\Address\Index.cshtml" />
     <Content Include="Views\Shared\partial_AddAddress.cshtml" />
-    <Content Include="Views\Address\Add.cshtml" />
+    <Content Include="Views\Address\Add_wo_css.cshtml" />
     <Content Include="Views\Address\Edit.cshtml" />
     <Content Include="Views\Address\Details.cshtml" />
     <Content Include="Views\Address\Delete.cshtml" />
     <Content Include="Views\Address\Edit - Orj.cshtml" />
     <Content Include="Views\Shared\_LayoutPage.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Address\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

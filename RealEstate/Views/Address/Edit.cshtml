@@ -19,55 +19,83 @@
     }
 }
 
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editform" }))
-    {
-        @Html.AntiForgeryToken()
-<div class="form-horizontal">
-    <h4>Address @Model.ID </h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-<div class="col-md-10">
-    @Html.HiddenFor(model => model.ID)
-    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
-
-</div>
-    <div class="col-md-10">
-        @Html.DropDownListFor(model => model.CountryID, selectCountry)
-        @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
-    </div>
-    <div class="col-md-10">
-        @Html.DropDownListFor(model => model.CityID, selectCity)
-        @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
-    </div>
-    <div class="col-md-10">
-        @Html.DropDownListFor(model => model.TownID, selectTown)
-        @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editform", @class = "form form-control" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Address @Model.ID </h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID)
+            @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CountryID, selectCountry, new { @class = "form form-control form-select" })
+            @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CityID, selectCity, new { @class = "form form-control form-select" })
+            @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.TownID, selectTown, new { @class = "form form-control form-select" })
+            @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Details, new { @class = "form form-control", @cols = 20 })
+                @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-offset-2 col-md-2">
+                <input type="submit" value="Save" class="btn btn-success form col-md-12" />
+            </div>
+            <div class="col-md-offset-2 col-md-2">
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary col-md-12" })
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-success" />
-        </div>
-    </div>
-</div>
-    }
+}
 
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
 
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    $(document).ready(() => {
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        $(document).ready(() => {
+            var currentCountryID = @Model.CountryID;
+            var currentTownID = @Model.TownID;
+            var currentCityID = @Model.CityID;
+            //console.log(currentCountryID);
+            //console.log(currentCityID);
+            //console.log(currentTownID);
+
+            setTimeout(
+                function () {
+                    $("#CountryID").change();
+                }, 100);
+
+            setTimeout(
+                function () {
+                    $("#CityID").val(currentCityID);
+                }, 200);
+
+            setTimeout(
+                function () {
+                    $("#CityID").change();
+                }, 300);
+            setTimeout(
+                function () {
+                    $("#TownID").val(currentTownID);
+                }, 400);
+            //$("#TownID").val(currentTownID).delay(300);
+
         //To change city list when country change
         $('#CountryID').on('change', function (e) {
 
@@ -122,7 +150,7 @@
 
         });
 
-        $('#CountryID').change();
+        /*$('#CountryID').change();*/
 
 
         $("#editform").submit(function (event) {
@@ -144,7 +172,7 @@
                     if (updateCheck == 1)
                     {
                         alert("UPDATE SUCCESFULL!");
-                        location.reload("/address/index")
+                        location.replace("/address/index");
                     }
                     else if (updateCheck == 0)
                     {
@@ -157,4 +185,13 @@
         });
 
     });
-    </script>
+</script>
+@section style
+{
+    <style>
+        input,textarea,label,select,a
+        {
+            margin:0.25rem;
+        }
+    </style >
+}
