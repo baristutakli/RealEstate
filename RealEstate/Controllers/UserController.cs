@@ -39,8 +39,8 @@ namespace RealEstate.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
-
-            return View();
+            User user = new User();
+            return View(user);
 
 
         }

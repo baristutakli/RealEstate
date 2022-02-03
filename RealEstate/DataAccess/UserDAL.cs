@@ -24,7 +24,7 @@ namespace RealEstate.DataAccess
 
         public User GetByID(int userId)
         {
-            string query = $"SELECT * FROM Users WHERE ID={userId};";
+            string query = $"SELECT * FROM [User] WHERE ID={userId};";
 
             return ListUser(query)[0];
         }
@@ -33,50 +33,31 @@ namespace RealEstate.DataAccess
         {
 
             //user.AddressID = Convert.ToInt32(AddressDAL.Methods.Insert(user.Address));
-            string query = $@"
-            INSERT INTO [dbo].[Users]
-               ([FullName]
-               ,[Email]
-               ,[Password]
-               ,[PhoneNumber]
-               ,[ProfilePicUrl]
-               ,[AddressID]
-               ,[RoleID])
-            VALUES
-           ( '{user.FullName}','{user.Email}','{user.Password}','{user.PhoneNumber}','{user.ProfilePicUrl}',{user.AddressID},{user.RoleID}); SELECT CAST(scope_identity() AS int);";
+            string query = $@"INSERT INTO [dbo].[User] ([FullName],[Email],[Password],[PhoneNumber],[ProfilePicUrl],[AddressID],[RoleID]) VALUES( '{user.FullName}','{user.Email}','{user.Password}','{user.PhoneNumber}','{user.ProfilePicUrl}',{user.AddressID},1); SELECT CAST(scope_identity() AS int);";
 
             return DbTools.Connection.Create(query);
         }
         public User Read(int userid)
         {
-            string query = $"SELECT * FROM Users WHERE ID = {userid}";
+            string query = $"SELECT * FROM [User] WHERE ID = {userid}";
             User usr = ListUser(query)[0];
             return usr;
         }
         public bool Update(User user)
         {
-            string query = $@"
-                            UPDATE [dbo].[Users]
-                               SET [FullName] = '{user.FullName}'
-                                  ,[Email] = '{user.Email}'
-                                  ,[Password] = '{user.Password}'
-                                  ,[PhoneNumber] = '{user.PhoneNumber}'
-                                  ,[ProfilePicUrl] = '{user.ProfilePicUrl}'
-                                  ,[AddressID] = {user.AddressID}
-                                  ,[RoleID] = {user.RoleID}
-                             WHERE ID={user.ID};";
+            string query = $@"UPDATE [dbo].[User] SET [FullName] = '{user.FullName}',[Email] = '{user.Email}', [Password] = '{user.Password}', [PhoneNumber] = '{user.PhoneNumber}',[ProfilePicUrl] = '{user.ProfilePicUrl}',[AddressID] = {user.AddressID},[RoleID] = 1 WHERE ID={user.ID};";
             return DbTools.Connection.Execute(query);
         }
 
         public bool Delete(User user)
         {
-            string query = $@"DELETE FROM Users WHERE ID={user.ID};";
+            string query = $@"DELETE FROM [User] WHERE ID={user.ID};";
             return DbTools.Connection.Execute(query);
         }
 
         public List<User> List()
         {
-            string query = "SELECT * FROM Users;";
+            string query = "SELECT * FROM [User];";
             return ListUser(query);
         }
 
