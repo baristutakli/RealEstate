@@ -1,7 +1,6 @@
 USE [master]
-
 GO
-/****** Object:  Database [RealEstate]    Script Date: 3.02.2022 12:09:02 ******/
+/****** Object:  Database [RealEstate]    Script Date: 3.02.2022 12:23:21 ******/
 CREATE DATABASE [RealEstate]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -83,7 +82,7 @@ ALTER DATABASE [RealEstate] SET QUERY_STORE = OFF
 GO
 USE [RealEstate]
 GO
-/****** Object:  Table [dbo].[Address]    Script Date: 3.02.2022 12:09:02 ******/
+/****** Object:  Table [dbo].[Address]    Script Date: 3.02.2022 12:23:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,7 +99,7 @@ CREATE TABLE [dbo].[Address](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AddressCity]    Script Date: 3.02.2022 12:09:02 ******/
+/****** Object:  Table [dbo].[AddressCity]    Script Date: 3.02.2022 12:23:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -115,7 +114,7 @@ CREATE TABLE [dbo].[AddressCity](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AddressCountry]    Script Date: 3.02.2022 12:09:02 ******/
+/****** Object:  Table [dbo].[AddressCountry]    Script Date: 3.02.2022 12:23:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +129,7 @@ CREATE TABLE [dbo].[AddressCountry](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AddressTown]    Script Date: 3.02.2022 12:09:02 ******/
+/****** Object:  Table [dbo].[AddressTown]    Script Date: 3.02.2022 12:23:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -145,7 +144,7 @@ CREATE TABLE [dbo].[AddressTown](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 3.02.2022 12:09:02 ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 3.02.2022 12:23:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -160,12 +159,12 @@ CREATE TABLE [dbo].[Role](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 3.02.2022 12:09:02 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 3.02.2022 12:23:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[User](
+CREATE TABLE [dbo].[Users](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[FullName] [nvarchar](50) NOT NULL,
 	[Email] [nvarchar](50) NOT NULL,
@@ -199,15 +198,15 @@ REFERENCES [dbo].[AddressCity] ([ID])
 GO
 ALTER TABLE [dbo].[AddressTown] CHECK CONSTRAINT [FK_AddressTown_AddressCity]
 GO
-ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_User_Address] FOREIGN KEY([AddressID])
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_User_Address] FOREIGN KEY([AddressID])
 REFERENCES [dbo].[Address] ([ID])
 GO
-ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_Address]
+ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_User_Address]
 GO
-ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_User_Role] FOREIGN KEY([RoleID])
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_User_Role] FOREIGN KEY([RoleID])
 REFERENCES [dbo].[Role] ([ID])
 GO
-ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_Role]
+ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_User_Role]
 GO
 USE [master]
 GO
