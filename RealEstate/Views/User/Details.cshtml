@@ -14,7 +14,7 @@
                 </dt>
 
                 <dd>
-                    <img src="@photoUrl" alt="@Model.FullName" style="height:180px;width:140px;" />
+                    <img id="profile" src="@photoUrl" alt="@Model.FullName" style="height:180px;width:140px;" />
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.FullName)
@@ -49,19 +49,13 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.ProfilePicUrl)
+                    @Html.DisplayNameFor(model => model.Address)
                 </dt>
-
                 <dd>
-                    @Html.DisplayFor(model => model.ProfilePicUrl)
-
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.AddressID)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.AddressID)
+                    @Model.Address.Country.Name <br>
+                    @Model.Address.City.Name <br>
+                    @Model.Address.Town.Name <br>
+                    @Model.Address.Details
                 </dd>
 
             </dl>
@@ -72,3 +66,15 @@
         </p>
     </section>
 </section>
+
+@section style
+{
+    <style>
+        img#profile
+        {
+            padding: 5px;
+            background: #f4ada0;
+            border-style: ridge;
+        }
+    </style>
+}

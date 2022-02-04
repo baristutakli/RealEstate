@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RealEstate.DataAccess;
 using RealEstate.Models;
+using RealEstate.Security;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,7 +79,11 @@ namespace RealEstate.Controllers
         {
             try
             {
+                if (user.ProfilePic != null)
+                    user.ProfilePicUrl = user.ID + "/" + user.ProfilePic.FileName;
                 UserDAL.Methods.Update(user);
+                if (user.ProfilePic != null)
+                    FotoUpload(user);
 
                 // TODO: Add update logic here
 
@@ -128,5 +133,27 @@ namespace RealEstate.Controllers
             }
         }
 
+
+        public ActionResult Login(string returnUrl = "/User/Index")
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(string email, string password, string returnUrl)
+        {
+            User std = UserDAL.Methods.Login(email, password);
+            //FormsAuthentication.SetAuthCookie("userlogin", false);
+            Role rl = std.Role;
+
+            if (std.ID == 0) // nesne boş ise
+            {
+                ViewBag.Error = "Login failed.";
+                return View("Login");
+            }
+            SessionPersister.Email = std.Email;
+            return Redirect(returnUrl);
+        }
     }
 }

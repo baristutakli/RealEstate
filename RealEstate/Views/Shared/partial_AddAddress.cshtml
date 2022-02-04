@@ -57,7 +57,10 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="from form-control btn btn-success" />
+                <input id ="savebutton" type="submit" value="Save" class="from form-control btn btn-success" />
+            </div>
+            <div class="col-md-offset-2 col-md-2">
+                <input id="editbutton" value="Edit" class="btn btn-success" style="display:none;" />
             </div>
         </div>
     </div>
@@ -139,7 +142,41 @@
                 encode: true,
                 success: function (insertedid) {
                     if (insertedid > 0) {
-                        location.reload();
+                        $("#AddressID").val(insertedid);
+                        $("#editbutton").show();
+                        $("#savebutton").hide();
+                        
+
+                        //location.reload();
+                    }
+                }
+            });
+
+            event.preventDefault();
+        });
+
+        $("#editbutton").click(function (event) {
+            var formData = {
+                ID: $("#AddressID").val(),
+                CountryID: $("#CountryID").val(),
+                CityID: $("#CityID").val(),
+                TownID: $("#TownID").val(),
+                Details: $("#Details").val()
+            };
+            var post_url = "/Address/Edit"
+            $.ajax({
+                type: "POST",
+                url: post_url,
+                data: formData,
+                dataType: "json",
+                encode: true,
+                success: function (updateCheck) {
+                    if (updateCheck == 1) {
+                        alert("UPDATE SUCCESFULL!");
+                        //location.replace("/address/index");
+                    }
+                    else if (updateCheck == 0) {
+                        alert("UPDATE ERROR !!!")
                     }
                 }
             });

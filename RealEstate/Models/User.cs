@@ -28,8 +28,21 @@ namespace RealEstate.Models
                 //this.Address = AddressDAL.Methods.GetByID(value);
             } 
         }
-        public Address Address { get; set; }
-        public Role Role { get; set; }
+        private Address _Address { get; set; }
+        public Address Address {
+            get
+            {
+                return AddressDAL.Methods.GetByID(this.AddressID);
+            }
+        }
+        public Role Role
+        {
+            get
+            {
+                return RoleDAL.Methods.GetByID(this.RoleID);
+            }
+        }
+
 
         private int _RoleID { get; set; }
         public int RoleID {
@@ -44,6 +57,8 @@ namespace RealEstate.Models
                 //this.Role = DbTools.Connection.GetRoleByID(value);
             } 
         }
+
+        
 
 
     }
