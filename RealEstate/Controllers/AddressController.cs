@@ -6,13 +6,15 @@ using System.Web.Mvc;
 using RealEstate.DataAccess;
 using RealEstate.Models;
 using Newtonsoft.Json;
+using RealEstate.Security;
 
 namespace RealEstate.Controllers
 {
     public class AddressController : Controller
     {
         private Address _Address { get; set; }
-        public Address Address {
+        public Address Address
+        {
             get
             {
                 if (this._Address == null)
@@ -20,10 +22,12 @@ namespace RealEstate.Controllers
                 return this._Address;
             }
         }
+        
         public ActionResult Index()
         {
             return View(AddressDAL.Methods.ListAddress("SELECT * FROM Address;"));
         }
+        [CustomAuthorize(Roles ="admin")]
         public ActionResult Add()
         {
             ViewBag.countries = GetCountries();

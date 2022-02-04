@@ -91,7 +91,7 @@ namespace RealEstate.DataAccess
 
         public User GetByEmail(string email)
         {
-            string query = $"SELECT * FROM User WHERE Email='{email}';";
+            string query = $"SELECT * FROM [User] WHERE Email='{email}';";
             try
             {
                 return ListUser(query)[0];
@@ -105,7 +105,7 @@ namespace RealEstate.DataAccess
 
         public User Login(string email, string password)
         {
-            string query = $"SELECT * FROM User WHERE Email={email} AND Password={password};";
+            string query = $"SELECT * FROM [User] WHERE Email='{email}' AND Password='{password}';";
             // TODO: addwithvalue ile parametreler girilecek.
             try
             {

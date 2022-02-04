@@ -65,7 +65,7 @@ namespace RealEstate.Controllers
             }
         }
 
-        // GET: User/Edit/5
+        [CustomAuthorize(Roles = "admin,user")]
         public ActionResult Edit(int id)
         {
             var result = UserDAL.Methods.GetByID(id);
@@ -95,7 +95,7 @@ namespace RealEstate.Controllers
             }
         }
 
-        // GET: User/Delete/5
+        [CustomAuthorize(Roles = "admin")]
         public ActionResult Delete(int id)
         {
             var result = UserDAL.Methods.GetByID(id);
@@ -154,6 +154,11 @@ namespace RealEstate.Controllers
             }
             SessionPersister.Email = std.Email;
             return Redirect(returnUrl);
+        }
+
+        public ActionResult AuthorizationFailed()
+        {
+            return View();
         }
     }
 }

@@ -15,24 +15,16 @@ namespace RealEstate.Models
         public string PhoneNumber { get; set; }
         public string ProfilePicUrl { get; set; }
         public HttpPostedFileBase ProfilePic { get; set; }
-
-        private int _AddressID { get; set; }
-        public int AddressID { 
-            get 
-            { 
-                return this._AddressID; 
-            }
-            set
-            {
-                this._AddressID = value;
-                //this.Address = AddressDAL.Methods.GetByID(value);
-            } 
-        }
+        public int AddressID { get; set; }
         private Address _Address { get; set; }
         public Address Address {
             get
             {
                 return AddressDAL.Methods.GetByID(this.AddressID);
+            }
+            set
+            {
+                this._Address = AddressDAL.Methods.GetByID(this.AddressID);
             }
         }
         public Role Role
