@@ -65,7 +65,7 @@ namespace RealEstate.DataAccess
             }
             catch (Exception)
             {
-                Console.WriteLine("HATA LOGU Yaz.");
+                throw;
             }
             finally
             {

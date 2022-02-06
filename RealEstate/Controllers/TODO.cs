@@ -8,14 +8,17 @@ namespace RealEstate.Controllers
     public class TODOS
     {
         // DONE: DbTools update 
-        // TODO: Address:View
-        // TODO: Layout template: Bootstrap.
+        // DONE: Address:View
+        // DONE: Layout template: Bootstrap.
 
-        // TODO:(İclal,Rümeysa) User: Controller,View,UserDAL(GetByID),View
+        // TODO:(İclal,Rümeysa) User: Controller,View,UserDAL(GetByID)(DONE)
+
         // TODO:(Oğuzhan,Yusuf) Residential: ResidentialDAL,Controller,View,DB Table(excelde var)
         // TODO:(Selin,Nevruz) AdvertResidential: AdvertResidentialDAL,Controller,View,DB Table
+
         // TODO:(Sena,Furkan) Land: Model,Controller,View,LandDAL,View
         // TODO:(Engincan,Güven) AdvertLand: Model,Controller,View,AdvertLandDAL,View
+
         // TODO:(Mustafa,Bilgehan) Commercial: Model,Controller,View,CommercialDAL,View
         // TODO:(Mehmet) AdvertCommercial: Model,Controller,View,AdvertCommercialDAL,View
     }

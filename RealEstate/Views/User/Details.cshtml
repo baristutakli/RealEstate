@@ -1,0 +1,80 @@
+﻿@model RealEstate.Models.User
+
+@{
+    string photoUrl = "../../../UploadedFiles/User/" + Model.ProfilePicUrl;
+}
+<section class="row">
+    <section class="col-9 p-5">
+        <div>
+            <h4>User</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.Label("Fotoğraf")
+                </dt>
+
+                <dd>
+                    <img id="profile" src="@photoUrl" alt="@Model.FullName" style="height:180px;width:140px;" />
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Password)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Password)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd>
+                    @Model.Address.Country.Name <br>
+                    @Model.Address.City.Name <br>
+                    @Model.Address.Town.Name <br>
+                    @Model.Address.Details
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+        </p>
+    </section>
+</section>
+
+@section style
+{
+    <style>
+        img#profile
+        {
+            padding: 5px;
+            background: #f4ada0;
+            border-style: ridge;
+        }
+    </style>
+}

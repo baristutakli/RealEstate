@@ -1,0 +1,48 @@
+﻿@model RealEstate.Models.Address
+
+<section class="col-9 p-5 align-items-center align-content-center">
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <table class="table">
+            <tr>
+                <th>
+                    Country
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    Town
+                </th>
+                <th>
+                    Details
+                </th>
+            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Country.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.City.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Town.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Details)
+                    </td>
+                </tr>
+
+        </table>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        }
+    </div>
+</section>

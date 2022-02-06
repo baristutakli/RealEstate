@@ -16,6 +16,7 @@ namespace RealEstate.ModelBase
         string Title { get; set; }
         string Explaination { get; set; }
         User User { get; set; }
+        double Price { get; set; }
         
     }
 }

@@ -15,21 +15,26 @@ namespace RealEstate.Models
         public string PhoneNumber { get; set; }
         public string ProfilePicUrl { get; set; }
         public HttpPostedFileBase ProfilePic { get; set; }
-
-        private int _AddressID { get; set; }
-        public int AddressID { 
-            get 
-            { 
-                return this._AddressID; 
+        public int AddressID { get; set; }
+        private Address _Address { get; set; }
+        public Address Address {
+            get
+            {
+                return AddressDAL.Methods.GetByID(this.AddressID);
             }
             set
             {
-                this._AddressID = value;
-                this.Address = AddressDAL.Methods.GetByID(value);
-            } 
+                this._Address = AddressDAL.Methods.GetByID(this.AddressID);
+            }
         }
-        public Address Address { get; set; }
-        public Role Role { get; set; }
+        public Role Role
+        {
+            get
+            {
+                return RoleDAL.Methods.GetByID(this.RoleID);
+            }
+        }
+
 
         private int _RoleID { get; set; }
         public int RoleID {
@@ -40,10 +45,12 @@ namespace RealEstate.Models
             set
             {
                 this._RoleID = value;
-                this.Role = RoleDAL.Methods.GetRoleByID(value);
+                //this.Role = RoleDAL.Methods.GetRoleByID(value);
                 //this.Role = DbTools.Connection.GetRoleByID(value);
             } 
         }
+
+        
 
 
     }

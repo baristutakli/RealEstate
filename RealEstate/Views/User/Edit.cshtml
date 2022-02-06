@@ -1,0 +1,290 @@
+﻿@model RealEstate.Models.User
+@using RealEstate.Models
+@using RealEstate.DataAccess
+@using Newtonsoft.Json
+
+@{
+    string photoUrl = "../../../UploadedFiles/User/" + Model.ProfilePicUrl;
+}
+@{
+    List<SelectListItem> selectCountry = new List<SelectListItem>();
+    List<SelectListItem> selectCity = new List<SelectListItem>();
+    List<SelectListItem> selectTown = new List<SelectListItem>();
+
+    string query = "SELECT * FROM AddressCountry;";
+    ViewBag.countries = JsonConvert.SerializeObject(AddressCountryDAL.Methods.ListCountry(query));
+
+
+    if (ViewBag.countries != null)
+    {
+        List<AddressCountry> countries = JsonConvert.DeserializeObject<List<AddressCountry>>(ViewBag.countries);
+
+        foreach (AddressCountry country in countries)
+        {
+            SelectListItem si = new SelectListItem();
+            si.Text = country.Name;
+            si.Value = country.ID.ToString();
+            selectCountry.Add(si);
+        }
+    }
+}
+<section class="row">
+    <section class="col-9 p-5">
+        @using (Html.BeginForm(actionName: "Edit", controllerName: "User", method: FormMethod.Post, htmlAttributes: new { @enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>User</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger form form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form form-control" } })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form form-control" } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <section class="col-3">
+                        <img src="@photoUrl" alt="@Model.FullName" style="height:180px;width:140px;" />
+                    </section>
+                    <section class="col-3">
+                        @Html.LabelFor(model => model.ProfilePic, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.ProfilePic, new { @type = "file" })
+                            @Html.ValidationMessageFor(model => model.ProfilePic, "", new { @class = "text-danger" })
+                        </div>
+                    </section>
+                    <section class="col-3">
+                        <div class="col-md-10">
+                            @Html.HiddenFor(model => model.ProfilePicUrl)
+                        </div>
+                    </section>
+                </div>
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.ProfilePicUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProfilePicUrl, new { htmlAttributes = new { @class = "form form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProfilePicUrl, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.HiddenFor(model => model.AddressID)
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-offset-2 col-md-2">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                    <div class="col-md-offset-2 col-md-2">
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary col-md-12" })
+                    </div>
+                </div>
+            </div>
+        }
+    </section>
+    <section class="col-3 p-5">
+        <section class="align-items-center align-content-center">
+            <p>
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editform", @class = "form form-control" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        <h4>Address</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="col-md-12">
+                            @Html.HiddenFor(model => model.AddressID)
+                            @Html.ValidationMessageFor(model => model.AddressID, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Address.CountryID, selectCountry, new { @class = "form form-control form-select" })
+                            @Html.ValidationMessageFor(model => model.Address.CountryID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Address.CityID, selectCity, new { @class = "form form-control form-select" })
+                            @Html.ValidationMessageFor(model => model.Address.CityID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Address.TownID, selectTown, new { @class = "form form-control form-select" })
+                            @Html.ValidationMessageFor(model => model.Address.TownID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(model => model.Address.Details, new { @class = "form form-control", @cols = 20 })
+                                @Html.ValidationMessageFor(model => model.Address.Details, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-offset-2 col-md-12">
+                                <input type="submit" value="Save" class="btn btn-success form col-md-12" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </p>
+        </section>
+
+    </section>
+
+
+
+</section>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        $(document).ready(() => {
+            var currentCountryID = @Model.Address.CountryID;
+            var currentTownID = @Model.Address.TownID;
+            var currentCityID = @Model.Address.CityID;
+            //console.log(currentCountryID);
+            //console.log(currentCityID);
+            //console.log(currentTownID);
+
+            setTimeout(
+                function () {
+                    $("#Address_CountryID").change();
+                }, 100);
+
+            setTimeout(
+                function () {
+                    $("#Address_CityID").val(currentCityID);
+                }, 200);
+
+            setTimeout(
+                function () {
+                    $("#Address_CityID").change();
+                }, 300);
+            setTimeout(
+                function () {
+                    $("#Address_TownID").val(currentTownID);
+                }, 400);
+            //$("#TownID").val(currentTownID).delay(300);
+
+        //To change city list when country change
+            $('#Address_CountryID').on('change', function (e) {
+
+            var selectedid = $("option:selected", this).val();
+            //console.log(selectedid);
+            var address = '/Address/GetCities/' + selectedid + '';
+            $.getJSON(address, function (data) {
+                //console.log(data);
+                data = data.replace("[", "");
+                data = data.replace("]", "");
+                data = data.replace(/\},{/g, "}...{");
+                datas = data.split("...");
+                $("#Address_CityID").html("");
+
+                $.each(datas, function (i, value) {
+                    //console.log(value);
+                    var city = JSON.parse(value);
+                    //console.log(city.ID);
+                    //console.log(city.Name);
+                    //console.log(city.CountryID);
+                    $("#Address_CityID").append("<option value='" + city.ID + "'>" + city.Name + "</option>");
+                });
+            });
+
+            setTimeout(
+                function () {
+                    $('#Address_CityID').change();
+                }, 100);
+        });
+
+        //To change town list when city change
+            $('#Address_CityID').on('change', function (e) {
+            var selectedid = $("option:selected", this).val();
+            //console.log(selectedid);
+            var address = '/Address/GetTowns/' + selectedid + '';
+            $.getJSON(address, function (data) {
+                data = data.replace("[", "");
+                data = data.replace("]", "");
+                data = data.replace(/\},{/g, "}...{");
+                datas = data.split("...");
+                $("#Address_TownID").html("");
+
+                $.each(datas, function (i, value) {
+                    //console.log(value);
+                    var town = JSON.parse(value);
+                    //console.log(town.ID);
+                    //console.log(town.Name);
+                    //console.log(town.CityID);
+                    $("#Address_TownID").append("<option value='" + town.ID + "'>" + town.Name + "</option>");
+                });
+            });
+
+        });
+
+        /*$('#CountryID').change();*/
+
+
+        $("#editform").submit(function (event) {
+            var formData = {
+                ID: $("#AddressID").val(),
+                CountryID: $("#Address_CountryID").val(),
+                CityID: $("#Address_CityID").val(),
+                TownID: $("#Address_TownID").val(),
+                Details: $("#Address_Details").val()
+            };
+            var post_url="/Address/Edit"
+            $.ajax({
+                type: "POST",
+                url: post_url,
+                data: formData,
+                dataType: "json",
+                encode: true,
+                success: function (updateCheck) {
+                    if (updateCheck == 1)
+                    {
+                        alert("UPDATE SUCCESFULL!");
+                        //location.replace("/address/index");
+                    }
+                    else if (updateCheck == 0)
+                    {
+                        alert("UPDATE ERROR !!!")
+                    }
+                }
+            });
+
+            event.preventDefault();
+        });
+
+    });
+</script>
+@section style
+{
+    <style>
+        input, textarea, label, select, a {
+            margin: 0.25rem;
+        }
+    </style>
+}

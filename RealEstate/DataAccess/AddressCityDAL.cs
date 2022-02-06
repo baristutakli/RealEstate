@@ -16,7 +16,7 @@ namespace RealEstate.DataAccess
         {
             get
             {
-                if (_Methods != null)
+                if (_Methods == null)
                     _Methods = new AddressCityDAL();
                 return _Methods;
             }
@@ -54,7 +54,11 @@ namespace RealEstate.DataAccess
             return cities;
         }
 
-
+        public AddressCity GetByID(int id)
+        {
+            string query = $"SELECT * FROM AddressCity WHERE ID={id}";
+            return ListCity(query)[0];
+        }
 
     }
 }

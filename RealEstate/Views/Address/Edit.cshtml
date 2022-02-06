@@ -1,0 +1,198 @@
+﻿@model RealEstate.Models.Address
+@using Newtonsoft.Json
+@using RealEstate.Models
+@{
+    List<SelectListItem> selectCountry = new List<SelectListItem>();
+    List<SelectListItem> selectCity = new List<SelectListItem>();
+    List<SelectListItem> selectTown = new List<SelectListItem>();
+    if (ViewBag.countries != null)
+    {
+        List<AddressCountry> countries = JsonConvert.DeserializeObject<List<AddressCountry>>(ViewBag.countries);
+
+        foreach (AddressCountry country in countries)
+        {
+            SelectListItem si = new SelectListItem();
+            si.Text = country.Name;
+            si.Value = country.ID.ToString();
+            selectCountry.Add(si);
+        }
+    }
+}
+<section class="row">
+    <section class="col-9 p-5">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editform", @class = "form form-control" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <h4>Address</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.ID)
+                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CountryID, selectCountry, new { @class = "form form-control form-select" })
+                    @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CityID, selectCity, new { @class = "form form-control form-select" })
+                    @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.TownID, selectTown, new { @class = "form form-control form-select" })
+                    @Html.ValidationMessageFor(model => model.TownID, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Details, new { @class = "form form-control", @cols = 20 })
+                        @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-offset-2 col-md-2">
+                        <input type="submit" value="Save" class="btn btn-success form col-md-12" />
+                    </div>
+                    <div class="col-md-offset-2 col-md-2">
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary col-md-12" })
+                    </div>
+                </div>
+            </div>
+        }
+    </section>
+</section>
+
+
+
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+        $(document).ready(() => {
+            var currentCountryID = @Model.CountryID;
+            var currentTownID = @Model.TownID;
+            var currentCityID = @Model.CityID;
+            //console.log(currentCountryID);
+            //console.log(currentCityID);
+            //console.log(currentTownID);
+
+            setTimeout(
+                function () {
+                    $("#CountryID").change();
+                }, 100);
+
+            setTimeout(
+                function () {
+                    $("#CityID").val(currentCityID);
+                }, 200);
+
+            setTimeout(
+                function () {
+                    $("#CityID").change();
+                }, 300);
+            setTimeout(
+                function () {
+                    $("#TownID").val(currentTownID);
+                }, 400);
+            //$("#TownID").val(currentTownID).delay(300);
+
+        //To change city list when country change
+        $('#CountryID').on('change', function (e) {
+
+            var selectedid = $("option:selected", this).val();
+            //console.log(selectedid);
+            var address = '/Address/GetCities/' + selectedid + '';
+            $.getJSON(address, function (data) {
+                //console.log(data);
+                data = data.replace("[", "");
+                data = data.replace("]", "");
+                data = data.replace(/\},{/g, "}...{");
+                datas = data.split("...");
+                $("#CityID").html("");
+
+                $.each(datas, function (i, value) {
+                    //console.log(value);
+                    var city = JSON.parse(value);
+                    //console.log(city.ID);
+                    //console.log(city.Name);
+                    //console.log(city.CountryID);
+                    $("#CityID").append("<option value='" + city.ID + "'>" + city.Name + "</option>");
+                });
+            });
+
+            setTimeout(
+                function () {
+                    $('#CityID').change();
+                }, 100);
+        });
+
+        //To change town list when city change
+        $('#CityID').on('change', function (e) {
+            var selectedid = $("option:selected", this).val();
+            //console.log(selectedid);
+            var address = '/Address/GetTowns/' + selectedid + '';
+            $.getJSON(address, function (data) {
+                data = data.replace("[", "");
+                data = data.replace("]", "");
+                data = data.replace(/\},{/g, "}...{");
+                datas = data.split("...");
+                $("#TownID").html("");
+
+                $.each(datas, function (i, value) {
+                    //console.log(value);
+                    var town = JSON.parse(value);
+                    //console.log(town.ID);
+                    //console.log(town.Name);
+                    //console.log(town.CityID);
+                    $("#TownID").append("<option value='" + town.ID + "'>" + town.Name + "</option>");
+                });
+            });
+
+        });
+
+        /*$('#CountryID').change();*/
+
+
+        $("#editform").submit(function (event) {
+            var formData = {
+                ID: $("#ID").val(),
+                CountryID: $("#CountryID").val(),
+                CityID: $("#CityID").val(),
+                TownID: $("#TownID").val(),
+                Details: $("#Details").val()
+            };
+            var post_url="/Address/Edit"
+            $.ajax({
+                type: "POST",
+                url: post_url,
+                data: formData,
+                dataType: "json",
+                encode: true,
+                success: function (updateCheck) {
+                    if (updateCheck == 1)
+                    {
+                        alert("UPDATE SUCCESFULL!");
+                        location.replace("/address/index");
+                    }
+                    else if (updateCheck == 0)
+                    {
+                        alert("UPDATE ERROR !!!")
+                    }
+                }
+            });
+
+            event.preventDefault();
+        });
+
+    });
+        </script>
+@section style
+{
+    <style>
+        input, textarea, label, select, a {
+            margin: 0.25rem;
+        }
+    </style>
+}

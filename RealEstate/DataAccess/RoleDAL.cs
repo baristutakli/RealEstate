@@ -16,15 +16,15 @@ namespace RealEstate.DataAccess
         {
             get
             {
-                if (_Methods != null)
+                if (_Methods == null)
                     _Methods = new RoleDAL();
                 return _Methods;
             }
         }
-        internal Role GetRoleByID(int roleid)
+        internal Role GetByID(int id)
         {
             Role role = new Role();
-            string query = $"SELECT * FROM Role WHERE ID = {roleid}";
+            string query = $"SELECT * FROM Role WHERE ID = {id}";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             IDataReader reader;
             try
@@ -35,7 +35,6 @@ namespace RealEstate.DataAccess
                 {
                     role.ID = int.Parse(reader["ID"].ToString());
                     role.Name = reader["Name"].ToString();
-                    role.Level = byte.Parse(reader["Level"].ToString());
                 }
             }
             catch
@@ -65,8 +64,7 @@ namespace RealEstate.DataAccess
                     roles.Add(new Role()
                     {
                         ID = int.Parse(reader["ID"].ToString()),
-                        Name = reader["Name"].ToString(),
-                        Level = byte.Parse(reader["Level"].ToString())
+                        Name = reader["Name"].ToString()
                     });
                 }
             }

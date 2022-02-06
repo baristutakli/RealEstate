@@ -16,7 +16,7 @@ namespace RealEstate.DataAccess
         {
             get
             {
-                if (_Methods != null)
+                if (_Methods == null)
                     _Methods = new AddressCountryDAL();
                 return _Methods;
             }
@@ -53,7 +53,11 @@ namespace RealEstate.DataAccess
             return countries;
         }
 
-
+        public AddressCountry GetByID(int id)
+        {
+            string query = $"SELECT * FROM AddressCountry WHERE ID={id}";
+            return ListCountry(query)[0];
+        }
 
 
 

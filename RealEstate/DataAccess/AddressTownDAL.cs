@@ -16,7 +16,7 @@ namespace RealEstate.DataAccess
         {
             get
             {
-                if (_Methods != null)
+                if (_Methods == null)
                     _Methods = new AddressTownDAL();
                 return _Methods;
             }
@@ -51,6 +51,12 @@ namespace RealEstate.DataAccess
             }
             //List<AddressCountry> copyCountries = new List<AddressCountry>();
             return towns;
+        }
+
+        public AddressTown GetByID(int id)
+        {
+            string query = $"SELECT * FROM AddressTown WHERE ID={id}";
+            return ListTown(query)[0];
         }
 
        
